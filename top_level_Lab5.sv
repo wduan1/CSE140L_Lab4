@@ -117,7 +117,7 @@ module top_level #(parameter W=8,
            temp1_enh = 'b1;
          end
       3: temp2_en    = 'b1;     // step 3: copy from temp1 and parity bits into temp2
-      4: temp3_en    = 'b1
+      4: temp3_en    = 'b1;
       5: begin                  // step 4: store from one bytte of temp2 into data_mem 
            write_en = 'b1;
 //           waddr    = function of count[6:3]
