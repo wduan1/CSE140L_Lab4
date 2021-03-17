@@ -37,8 +37,20 @@ module top_level #(parameter W=8,
   logic[15:0] temp1, temp2;
   logic       temp1_enh, temp1_enl, temp2_en;
 
+
+
+  //
+ 
   assign parity[8] = ^temp1[10:4];
-//...
+  //
+  assign parity[4] = (^temp1[10:7])^(^temp1[3:1]);
+  //XOR all the data bits together to check for parity
+  assign parity[2] = temp1[0]^temp[2]^temp[3]^temp[5]^temp[6]^temp[9]^temp[10]
+  assign parity[1] = temp1[0]^temp[1]^temp[3]^temp[4]^temp[6]^temp[8]^temp[10]
+  //XOR all parity values to check dual error correction
+  assign parity[0] = ^temp1^parity[1]^parity[2]^parity[4]^parity[8]
+
+  
 
   always @(posedge clk)
     if(init) begin
@@ -50,7 +62,7 @@ module top_level #(parameter W=8,
       count                     <= count + 1;
       if(temp1_enh) temp1[15:8] <= data_out;
       if(temp1_enl) temp1[ 7:0] <= data_out;
-//    if(temp2_en)  temp2       <= function of temp1 and parity bits
+      if(temp2_en)  temp2       <= {temp1[10:4],parity[8],temp1[3:1],parity[4],temp1[0],parity[2:0]};
     end  
 
   always_comb begin
@@ -65,10 +77,12 @@ module top_level #(parameter W=8,
     case(count[2:0])
       1: begin                  // step 1: load from data_mem into lower byte of temp1
 //           raddr     = function of count[6:3]
+           raddr = 2*count[6:3];
            temp1_enl = 'b1;
          end  
       2: begin                  // step 2: load from data_mem into upper byte of temp1
 //           raddr      = function of count[6:3]
+          
            temp1_enh = 'b1;
          end
       3: temp2_en    = 'b1;     // step 3: copy from temp1 and parity bits into temp2
