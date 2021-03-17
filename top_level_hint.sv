@@ -82,7 +82,7 @@ module top_level #(parameter W=8,
          end  
       2: begin                  // step 2: load from data_mem into upper byte of temp1
 //           raddr      = function of count[6:3]
-          
+           raddr = 2 * count[6:3] + 1
            temp1_enh = 'b1;
          end
       3: temp2_en    = 'b1;     // step 3: copy from temp1 and parity bits into temp2
@@ -90,11 +90,15 @@ module top_level #(parameter W=8,
            write_en = 'b1;
 //           waddr    = function of count[6:3]
 //           data_in  = bits from temp2
+            waddr = 2 * count[6:3] + 30
+            data_in = temp2[7:0]
          end
       5: begin
            write_en = 'b1;      // step 5: store from other byte of temp2 into data_mem
 //           waddr    = function of count[6:3]
 //           data_in  = bits from temp2
+            waddr = 2 * count[6:3] + 31
+            data_in = temp2[15:8]
          end
     endcase
   end
