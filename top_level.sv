@@ -45,12 +45,11 @@ module top_level #(parameter W=8,
   //
   assign parity[4] = (^temp1[10:7])^(^temp1[3:1]);
   //XOR all the data bits together to check for parity
-  assign parity[2] = temp1[0]^temp[2]^temp[3]^temp[5]^temp[6]^temp[9]^temp[10];
-  assign parity[1] = temp1[0]^temp[2]^temp[3]^temp[4]^temp[6]^temp[8]^temp[10];
+  assign parity[2] = temp1[0]^temp1[2]^temp1[3]^temp1[5]^temp1[6]^temp1[9]^temp1[10];
+  assign parity[1] = temp1[0]^temp1[2]^temp1[3]^temp1[4]^temp1[6]^temp1[8]^temp1[10];
   //XOR all parity values to check dual error correction
   assign parity[0] = ^temp1^parity[8]^parity[4]^parity[2]^parity[1];
 
-  
 
   always @(posedge clk)
     if(init) begin
