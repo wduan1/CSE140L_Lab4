@@ -53,14 +53,14 @@ module top_level #(parameter W=8,
   assign parity[0] = ^temp1[15:1];
 
 // Parties from a message
-  assign other_parity[8] = temp1[8];
-  assign other_parity[4] = temp1[4];
-  assign other_parity[2] = temp1[2];
-  assign other_parity[1] = temp1[1];
-  assign other_parity[0] = temp1[0];
+  assign parity2[8] = temp1[8];
+  assign parity2[4] = temp1[4];
+  assign parity2[2] = temp1[2];
+  assign parity2[1] = temp1[1];
+  assign parity2[0] = temp1[0];
 
 // XOR results from parity bits from data and the message
-  assign result = parity ^ other_parity;
+  assign result = parity ^ parity2;
   assign check = {result[8],result[4],result[2],result[1]};
   assign flag = result[8] || result[4] || result[2] || result[1] || result[0];
 
