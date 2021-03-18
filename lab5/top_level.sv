@@ -77,15 +77,15 @@ module top_level #(parameter W=8,
       if(temp1_enl) temp1[ 7:0] <= data_out;
       if(temp2_en)  begin
       
-      //0 error case
+      //No bits flipped, reproduce original 11-bit message
       if (result[0] == 0 && flag == 0) begin
         temp2 <= {5'b00000,temp1[15:9],temp1[7:5], temp1[3]};
         end
-       // Two errors
+       // Two bits flipped, give up
       if (result[0] == 0 && flag == 1) begin
         temp2 <= {16'b1000011111111111};
         end
-      // One error - data bit / parity bit detection
+      // One bit flipped, set correction flag
       if (result[0] == 1 && flag == 1) begin
          corrections = 'b1;
         end
