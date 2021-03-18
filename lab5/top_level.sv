@@ -102,6 +102,7 @@ module top_level #(parameter W=8,
     temp1_enl        = 'b0;
     temp1_enh        = 'b0;
     temp2_en         = 'b0;
+    temp3_en         = 'b0;
     raddr            = 'b0;
     waddr            = 'b0;
     write_en         = 'b0;
