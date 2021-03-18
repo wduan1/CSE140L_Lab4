@@ -1,4 +1,4 @@
-// shell for Lab 4 CSE140L
+// shell for Lab 5 CSE140L
 // this will be top level of your DUT
 // W is data path width (8 bits)
 // byte count = number of "words" (bytes) in reg_file
@@ -69,6 +69,7 @@ module top_level #(parameter W=8,
       count <= 0;
       temp1 <= 'b0;
       temp2 <= 'b0;
+      corrections <= 'b0;
     end
     else begin
       count                     <= count + 1;
@@ -122,7 +123,7 @@ module top_level #(parameter W=8,
            write_en = 'b1;
 //           waddr    = function of count[6:3]
 //           data_in  = bits from temp2
-           waddr = 2*count[6:3]+94;
+           waddr = 2*count[6:3] + 94;
            data_in = temp2[7:0];
          end
       6: begin
